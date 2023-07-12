@@ -1,31 +1,19 @@
-import pandas as pd # data analysis toolkit - create, read, update, delete datasets
-import numpy as np #matrix math
+import pandas as pd 
+import numpy as np 
 from sklearn.model_selection import train_test_split #to split out training and testing data 
-#keras is a high level wrapper on top of tensorflow (machine learning library)
-#The Sequential container is a linear stack of layers
 from keras.models import Sequential
-#popular optimization strategy that uses gradient descent 
 from keras.optimizers import Adam
-#to save our model periodically as checkpoints for loading later
 from keras.callbacks import ModelCheckpoint
-#what types of layers do we want our model to have?
 from keras.layers import Lambda, Conv2D, MaxPooling2D, Dropout, Dense, Flatten
-#helper class to define input shape and generate training images given image paths & steering angles
 from utils import INPUT_SHAPE, batch_generator
-#for command line arguments
 import argparse
-#for reading files
 import os
 
 #for debugging, allows for reproducible (deterministic) results 
 np.random.seed(0)
 
 
-def load_data(args):
-    """
-    Load training data and split it into training and validation set
-    """
-    #reads CSV file into a single dataframe variable
+def load_data(args): 
     data_df = pd.read_csv(os.path.join(os.getcwd(), args.data_dir, 'driving_log.csv'), names=['center', 'left', 'right', 'steering', 'throttle', 'reverse', 'speed'])
 
     #yay dataframes, we can select rows and columns by their names
@@ -35,7 +23,6 @@ def load_data(args):
     y = data_df['steering'].values
 
     #now we can split the data into a training (80), testing(20), and validation set
-    #thanks scikit learn
     X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=args.test_size, random_state=0)
 
     return X_train, X_valid, y_train, y_valid
@@ -80,9 +67,7 @@ def build_model(args):
 
 
 def train_model(model, args, X_train, X_valid, y_train, y_valid):
-    """
-    Train the model
-    """
+   
     #Saves the model after every epoch.
     #quantity to monitor, verbosity i.e logging mode (0 or 1), 
     #if save_best_only is true the latest best model according to the quantity monitored will not be overwritten.
@@ -143,7 +128,6 @@ def main():
     parser.add_argument('-l', help='learning rate',         dest='learning_rate',     type=float, default=1.0e-4)
     args = parser.parse_args()
 
-    #print parameters
     print('-' * 30)
     print('Parameters')
     print('-' * 30)
@@ -151,11 +135,8 @@ def main():
         print('{:<20} := {}'.format(key, value))
     print('-' * 30)
 
-    #load data
     data = load_data(args)
-    #build model
     model = build_model(args)
-    #train model on data, it saves as model.h5 
     train_model(model, args, *data)
 
 
