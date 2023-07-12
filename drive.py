@@ -1,26 +1,14 @@
-#parsing command line arguments
 import argparse
-#decoding camera images
 import base64
-#for frametimestamp saving
 from datetime import datetime
-#reading and writing files
 import os
-#high level file operations
 import shutil
-#matrix math
 import numpy as np
-#real-time server
 import socketio
-#concurrent networking 
 import eventlet
-#web server gateway interface
 import eventlet.wsgi
-#image manipulation
 from PIL import Image
-#web framework
 from flask import Flask
-#input output
 from io import BytesIO
 
 #load our saved model
