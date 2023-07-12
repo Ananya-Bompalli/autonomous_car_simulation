@@ -11,25 +11,19 @@ from PIL import Image
 from flask import Flask
 from io import BytesIO
 
-#load our saved model
 from keras.models import load_model
 
-#helper class
 import utils
 
 #initialize our server
 sio = socketio.Server()
-#our flask (web) app
 app = Flask(__name__)
-#init our model and image array as empty
 model = None
 prev_image_array = None
 
-#set min/max speed for our autonomous car
 MAX_SPEED = 25
 MIN_SPEED = 10
 
-#and a speed limit
 speed_limit = MAX_SPEED
 
 #registering event handler for the server
