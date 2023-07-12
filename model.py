@@ -9,7 +9,6 @@ from utils import INPUT_SHAPE, batch_generator
 import argparse
 import os
 
-#for debugging, allows for reproducible (deterministic) results 
 np.random.seed(0)
 
 
@@ -22,7 +21,6 @@ def load_data(args):
     #and our steering commands as our output data
     y = data_df['steering'].values
 
-    #now we can split the data into a training (80), testing(20), and validation set
     X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=args.test_size, random_state=0)
 
     return X_train, X_valid, y_train, y_valid
