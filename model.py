@@ -14,11 +14,7 @@ np.random.seed(0)
 
 def load_data(args): 
     data_df = pd.read_csv(os.path.join(os.getcwd(), args.data_dir, 'driving_log.csv'), names=['center', 'left', 'right', 'steering', 'throttle', 'reverse', 'speed'])
-
-    #yay dataframes, we can select rows and columns by their names
-    #we'll store the camera images as our input data
     X = data_df[['center', 'left', 'right']].values
-    #and our steering commands as our output data
     y = data_df['steering'].values
 
     X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=args.test_size, random_state=0)
